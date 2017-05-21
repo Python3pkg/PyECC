@@ -170,12 +170,12 @@ prime having great security characteristics, 521 bits are preferred
 over a constructed 512 bit field.)
 """
 
-import ecdsa
+from . import ecdsa
 import hashlib
 
-from encoding import *
-from eccrypt import *
-from SecurityViolationException import *
+from .encoding import *
+from .eccrypt import *
+from .SecurityViolationException import *
 
 
 class Key:
@@ -217,7 +217,7 @@ class Key:
         if kid == k.keyid():
             return k
         else:
-            raise ValueError, "Invalid Key ID"
+            raise ValueError("Invalid Key ID")
 
     # --- IDENTIFICATION AND VALIDATION ---------------------------------------
 
@@ -262,7 +262,7 @@ class Key:
             s = ecdsa.sign(h, self._priv)
             return enc_point(s)
         else:
-            raise AttributeError, 'Private key needed for signing.'
+            raise AttributeError('Private key needed for signing.')
 
     def verify(self, data, sig, hashfunc='sha256'):
         '''Verify the signature of data using the specified hash function'''
@@ -297,7 +297,7 @@ class Key:
         if source.verify(text, sgn):
             return text
         else:
-            raise SecurityViolationException, 'Invalid Signature'
+            raise SecurityViolationException('Invalid Signature')
 
 
 if __name__ == '__main__':
@@ -316,6 +316,6 @@ if __name__ == '__main__':
                 t = time.time()
                 receiver.auth_decrypt(e, sender)
                 t2 = time.time() - t
-                print('{}, {}, {}, {}, {}'.format(s, r, len(e), t1, t2))
+                print(('{}, {}, {}, {}, {}'.format(s, r, len(e), t1, t2)))
 
     test_overhead()
